@@ -30,7 +30,7 @@ jobs:
       - name: Preparar portal publico
         run: |
           mkdir -p _site
-          cp portal/index.html portal/printers.js portal/logo.png portal/banner-together.png _site/
+          cp portal/index.html portal/printers.js portal/logo.png portal/banner-together.png portal/banner-together-hd.jpg _site/
           touch _site/.nojekyll
 
       - name: Enviar portal

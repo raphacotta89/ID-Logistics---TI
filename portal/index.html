@@ -19,8 +19,9 @@
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 "Segoe UI",system-ui,sans-serif}
   header{position:relative;height:clamp(165px,16.9vw,230px);overflow:hidden;background:#fff;border-bottom:1px solid rgba(10,47,107,.12);box-shadow:0 6px 20px rgba(6,44,85,.13)}
-  .header-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-  .header-inner{position:relative;z-index:1;width:100%;height:100%;padding:20px 14px;display:flex;align-items:center}
+  .header-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;clip-path:inset(0 30% 0 0)}
+  .header-cleanup{position:absolute;z-index:1;inset:0 0 0 auto;width:38%;background:linear-gradient(90deg,rgba(255,255,255,0),#fff 18%,#fff)}
+  .header-inner{position:relative;z-index:2;width:100%;height:100%;padding:20px 14px;display:flex;align-items:center;justify-content:space-between;gap:24px}
   .header-brand{display:flex;align-items:center;gap:15px;padding:13px 17px 13px 13px;background:rgba(255,255,255,.92);border:1px solid rgba(10,47,107,.16);border-radius:16px;box-shadow:0 8px 25px rgba(6,44,85,.16);backdrop-filter:blur(5px)}
   .header-logo{width:68px;height:68px;object-fit:cover;display:block;border-radius:12px;box-shadow:0 3px 10px rgba(0,0,0,.2)}
   .brand-fallback{font-weight:700;font-size:17px;letter-spacing:.5px;border:2px solid rgba(255,255,255,.5);padding:4px 11px;border-radius:5px}
@@ -28,16 +29,22 @@
   header h1{font-size:25px;font-weight:750;margin:0;letter-spacing:.1px;color:#073b74}
   .header-copy>span{font-size:15px;color:#55708e}
   header .count{display:inline-block;width:max-content;margin-top:7px;font-size:12px;color:#fff;background:#0a4f8d;padding:4px 9px;border-radius:999px}
+  .campaign-message{display:flex;flex-direction:column;align-items:center;gap:5px;margin-right:2.5vw;font-weight:800;line-height:1;letter-spacing:.8px;white-space:nowrap}
+  .campaign-message .blue{padding:7px 14px;background:#064c95;color:#fff;font-size:clamp(16px,1.55vw,25px);box-shadow:0 2px 5px rgba(6,44,85,.12)}
+  .campaign-message .red{padding:6px 16px;background:#ed2524;color:#fff;font-size:clamp(15px,1.35vw,22px);font-style:italic;font-weight:700;letter-spacing:-.2px}
+  .campaign-message .bottom{padding-inline:20px}
   main{max-width:1180px;margin:0 auto;padding:28px 20px 60px}
   @media(max-width:620px){
     header{height:178px}
-    .header-art{object-position:69% center}
+    .header-art{content:url("banner-together.png");clip-path:none;object-position:69% center}
+    .header-cleanup{display:none}
     .header-inner{padding:14px}
     .header-brand{gap:10px;padding:10px 12px 10px 10px;border-radius:13px}
     .header-logo{width:50px;height:50px;border-radius:9px}
     header h1{font-size:19px}
     .header-copy>span{font-size:13px}
     header .count{font-size:11px;margin-top:5px}
+    .campaign-message{display:none}
     main{padding:20px 14px 48px}
   }
 </style>
@@ -88,7 +95,8 @@
 </style>
 
 <header>
-  <img class="header-art" src="banner-together.png" alt="">
+  <img class="header-art" src="banner-together-hd.jpg" alt="">
+  <span class="header-cleanup" aria-hidden="true"></span>
   <div class="header-inner">
     <div class="header-brand">
       <img class="header-logo" src="logo.png" alt="ID Logistics" onerror="this.outerHTML='&lt;span class=\'brand-fallback\'&gt;ID LOGISTICS&lt;/span&gt;'">
@@ -97,6 +105,11 @@
         <span>Suporte de TI &middot; ID Logistics</span>
         <span class="count" id="contador"></span>
       </div>
+    </div>
+    <div class="campaign-message" aria-label="Let's build our ID Logistics together">
+      <span class="blue">LET'S BUILD OUR</span>
+      <span class="red">ID LOGISTICS</span>
+      <span class="blue bottom">TOGETHER</span>
     </div>
   </div>
 </header>
