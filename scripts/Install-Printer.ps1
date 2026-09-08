@@ -82,6 +82,16 @@ if ($p -is [array]) {
     Stop-Script 1
 }
 
+$camposPendentes = @()
+foreach ($campo in 'ip', 'fila', 'driverName') {
+    if (-not $p.$campo) { $camposPendentes += $campo }
+}
+if ($camposPendentes.Count) {
+    Write-Err "Cadastro incompleto para '$Id': $($camposPendentes -join ', ')."
+    Write-Host "  Complete esses campos no portal\printers.json antes de instalar." -ForegroundColor DarkGray
+    Stop-Script 4
+}
+
 Write-Host "   Impressora : $($p.modelo)"
 Write-Host "   Setor      : $($p.setor)"
 Write-Host "   Local      : $($p.local)"
@@ -151,9 +161,13 @@ Write-Step "Verificando driver '$($p.driverName)'..."
 $driverInstalado = Get-PrinterDriver -Name $p.driverName -ErrorAction SilentlyContinue
 
 if (-not $driverInstalado) {
+    if (-not $p.driverPath) {
+        Write-Err "Driver nao instalado e driverPath nao preenchido no catalogo."
+        Stop-Script 3
+    }
     $pasta = Join-Path $DriverRoot $p.driverPath
 
-    if (-not $p.driverPath -or -not (Test-Path $pasta)) {
+    if (-not (Test-Path $pasta)) {
         Write-Err "Driver nao instalado e pacote nao encontrado em: $pasta"
         Write-Host "  Coloque os arquivos do driver (com o .INF) nessa pasta." -ForegroundColor DarkGray
         Stop-Script 3

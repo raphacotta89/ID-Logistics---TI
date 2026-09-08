@@ -34,16 +34,17 @@ Rode de qualquer máquina dentro da rede da unidade. Não precisa de admin.
 
 ```powershell
 cd scripts
-.\Scan-Printers.ps1 -Subnet 10.20.30
+.\Scan-Printers.ps1 -Subnet 10.215.60,10.215.61,10.215.62 -Manufacturer Epson,HP,Brother
 ```
 
 Varre de 1 a 254, testa as portas 9100 / 515 / 631, tenta ler o modelo pela página web
-da impressora e grava o `portal\printers.json`.
+da impressora e grava o `portal\printers.json`. O filtro acima inclui somente Epson, HP e Brother;
+equipamentos sem fabricante confirmado ficam de fora.
 
 Rodando de novo depois, use `-Merge` para não perder o que já foi preenchido à mão:
 
 ```powershell
-.\Scan-Printers.ps1 -Subnet 10.20.30 -Merge
+.\Scan-Printers.ps1 -Subnet 10.215.60,10.215.61,10.215.62 -Manufacturer Epson,HP,Brother -Merge
 ```
 
 ### 2. Completar o catálogo
@@ -131,7 +132,7 @@ GitHub (repo privado)  →  fonte da verdade, versionamento
 | Impressora nova | Adicionar no `printers.json` + `.\Build-Portal.ps1` |
 | Impressora trocou de IP | Editar o `ip` no JSON + `.\Build-Portal.ps1` |
 | Impressora removida | Apagar do JSON + `.\Build-Portal.ps1` |
-| Auditoria do parque | `.\Scan-Printers.ps1 -Subnet 10.20.30 -Merge` |
+| Auditoria do parque | `.\Scan-Printers.ps1 -Subnet 10.215.60,10.215.61,10.215.62 -Manufacturer Epson,HP,Brother -Merge` |
 
 ---
 

@@ -21,7 +21,8 @@ if (-not $CatalogPath) { $CatalogPath = Join-Path $PortalDir 'printers.json' }
 
 if (-not (Test-Path $CatalogPath)) { throw "Catalogo nao encontrado: $CatalogPath" }
 
-$catalogo = @(Get-Content $CatalogPath -Raw -Encoding UTF8 | ConvertFrom-Json)
+$catalogoLido = Get-Content $CatalogPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$catalogo = @(foreach ($item in $catalogoLido) { $item })
 $json     = $catalogo | ConvertTo-Json -Depth 5 -Compress
 
 # --- 1. printers.js ---

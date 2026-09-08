@@ -54,12 +54,15 @@
   .badges{display:flex;gap:6px;flex-wrap:wrap}
   .badge{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--surface-2);color:var(--text-dim);border:1px solid var(--border)}
   .badge.cor{color:var(--accent);border-color:var(--accent)}
+  .badge.pending{color:#9a6700;border-color:#c69026;background:#fff8df}
   .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
-  button{font:inherit;font-size:13px;padding:8px 12px;border-radius:7px;border:1px solid var(--border);
+  button,.button{font:inherit;font-size:13px;padding:8px 12px;border-radius:7px;border:1px solid var(--border);
     background:var(--surface-2);color:var(--text);cursor:pointer;transition:.12s}
-  button:hover{border-color:var(--brand-2)}
+  .button{text-decoration:none;display:inline-block}
+  button:hover,.button:hover{border-color:var(--brand-2)}
   button.primary{background:var(--brand-2);border-color:var(--brand-2);color:#fff;font-weight:600}
   button.primary:hover{filter:brightness(1.1)}
+  button:disabled{cursor:not-allowed;opacity:.48;filter:none}
   button.ok{background:var(--accent);border-color:var(--accent);color:#fff}
   .empty{text-align:center;padding:60px 20px;color:var(--text-dim)}
   footer{text-align:center;color:var(--text-dim);font-size:12px;padding:24px}
@@ -76,8 +79,8 @@
   <div class="aviso">
     <strong>Como instalar:</strong> <b>Instalar</b> usa o protocolo <code>idlprint://</code> e executa direto
     (precisa do <code>idlprint.reg</code> aplicado uma vez nesta maquina).
-    <b>Baixar .bat</b> funciona em qualquer maquina.
-    <b>Copiar</b> coloca o comando na area de transferencia para colar num PowerShell como administrador.
+    <b>Copiar comando</b> coloca a instalacao na area de transferencia para colar num PowerShell como administrador.
+    Cadastros sem fila ou driver ficam bloqueados ate serem completados.
   </div>
 
   <div class="toolbar">
@@ -118,8 +121,19 @@
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c =>
     ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 
+  function caminhoInstalador() {
+    if (location.protocol !== 'file:') return '';
+    let caminho = decodeURIComponent(location.pathname).replace(/\//g, '\\');
+    if (location.hostname) caminho = '\\\\' + location.hostname + caminho;
+    else caminho = caminho.replace(/^\\(?=[A-Za-z]:)/, '');
+    return caminho.replace(/\\portal\\index\.html$/i, '\\scripts\\Install-Printer.ps1');
+  }
+
+  const instalador = caminhoInstalador();
+
   function comando(p) {
-    return 'powershell -NoProfile -ExecutionPolicy Bypass -File "\\\\SERVIDOR\\ti$\\impressoras\\scripts\\Install-Printer.ps1" -Id ' + p.id;
+    if (!instalador) return '';
+    return 'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "' + instalador + '" -Id "' + p.id + '"';
   }
 
   function cardHTML(p) {
@@ -127,6 +141,9 @@
     b.push(p.colorido ? '<span class="badge cor">Colorida</span>' : '<span class="badge">Mono</span>');
     if (p.duplex) b.push('<span class="badge">Duplex</span>');
     if (p.fabricante) b.push('<span class="badge">' + esc(p.fabricante) + '</span>');
+    const pronto = Boolean(p.ip && p.fila && p.driverName);
+    if (!pronto) b.push('<span class="badge pending">Cadastro incompleto</span>');
+    const cmd = comando(p);
 
     return '<div class="card">' +
       '<div class="card-head"><div>' +
@@ -137,9 +154,9 @@
       '<dt>Fila</dt><dd>' + esc(p.fila || '-') + '</dd></dl>' +
       '<div class="badges">' + b.join('') + '</div>' +
       '<div class="actions">' +
-        '<button class="primary" onclick="location.href=\'idlprint://' + encodeURIComponent(p.id) + '\'">Instalar</button>' +
-        '<button onclick="location.href=\'launchers/' + encodeURIComponent(p.id) + '.bat\'">Baixar .bat</button>' +
-        '<button data-cmd="' + esc(comando(p)) + '" onclick="copiar(this)">Copiar comando</button>' +
+        '<button class="primary" ' + (pronto ? 'onclick="location.href=\'idlprint://' + encodeURIComponent(p.id) + '\'"' : 'disabled title="Preencha fila e driverName"') + '>Instalar</button>' +
+        '<button ' + (pronto && cmd ? 'data-cmd="' + esc(cmd) + '" onclick="copiar(this)"' : 'disabled title="Abra o portal pela pasta interna e complete o cadastro"') + '>Copiar comando</button>' +
+        '<a class="button" href="http://' + esc(p.ip) + '/" target="_blank" rel="noopener">Abrir painel</a>' +
       '</div></div>';
   }
 
