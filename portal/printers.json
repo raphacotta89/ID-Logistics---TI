@@ -9,12 +9,12 @@
     "hostname": "ID-OFFICE-CNF2",
     "mac": "94-DD-F8-2E-99-BD",
     "fila": "IDL-ADM-COLOR",
-    "driverName": "",
+    "driverName": "Brother MFC-L8610CDW series",
     "driverPath": "brother-mfc-l8610cdw",
     "portas": [515, 631, 9100],
     "colorido": true,
     "duplex": true,
-    "observacao": "Nome da fila confirmado; confirmar driverName."
+    "observacao": "Nome da fila e driver confirmados."
   },
   {
     "id": "outbound-cnf2",
@@ -26,12 +26,12 @@
     "hostname": "OutBound-CNF2",
     "mac": "94-DD-F8-4B-DF-06",
     "fila": "IDL-HSE",
-    "driverName": "",
+    "driverName": "Brother Laser Type1 Class Driver",
     "driverPath": "brother-dcp-l5662dn",
     "portas": [515, 631, 9100],
     "colorido": false,
     "duplex": true,
-    "observacao": "Nome da fila confirmado; confirmar driverName."
+    "observacao": "Nome da fila confirmado; usa driver de classe Brother."
   },
   {
     "id": "hp-60-36",
@@ -43,12 +43,12 @@
     "hostname": "HP4BA338",
     "mac": "30-13-8B-4B-A3-38",
     "fila": "IDL-OUT-TOM",
-    "driverName": "",
+    "driverName": "HP Laser 408 PCL6",
     "driverPath": "hp-laser-408",
     "portas": [515, 631, 9100],
     "colorido": false,
     "duplex": false,
-    "observacao": "Nome da fila confirmado; confirmar duplex e driverName."
+    "observacao": "Nome da fila e driver confirmados; confirmar duplex."
   },
   {
     "id": "epson-60-41",
@@ -60,12 +60,12 @@
     "hostname": "",
     "mac": "A4-D7-3C-74-AF-5F",
     "fila": "IDL-IXD-MESA",
-    "driverName": "",
+    "driverName": "EPSON WF-M5899 Series",
     "driverPath": "epson-wf-m5899",
     "portas": [515, 631, 9100],
     "colorido": false,
     "duplex": true,
-    "observacao": "Nome da fila confirmado; confirmar driverName."
+    "observacao": "Nome da fila e driver confirmados."
   },
   {
     "id": "epson-60-42",
@@ -77,12 +77,12 @@
     "hostname": "",
     "mac": "A4-D7-3C-74-AF-3C",
     "fila": "IDL-IXD-PS",
-    "driverName": "",
+    "driverName": "EPSON WF-M5899 Series",
     "driverPath": "epson-wf-m5899",
     "portas": [515, 631, 9100],
     "colorido": false,
     "duplex": true,
-    "observacao": "Nome da fila confirmado; confirmar driverName."
+    "observacao": "Nome da fila e driver confirmados."
   },
   {
     "id": "epson-60-43",
@@ -94,12 +94,12 @@
     "hostname": "",
     "mac": "A4-D7-3C-74-AF-39",
     "fila": "IDL-IXD-TOM",
-    "driverName": "",
+    "driverName": "EPSON WF-M5899 Series",
     "driverPath": "epson-wf-m5899",
     "portas": [515, 631, 9100],
     "colorido": false,
     "duplex": true,
-    "observacao": "Nome da fila confirmado; confirmar driverName."
+    "observacao": "Nome da fila e driver confirmados."
   },
   {
     "id": "learning",
@@ -111,11 +111,11 @@
     "hostname": "LEARNING",
     "mac": "94-DD-F8-4B-DF-57",
     "fila": "IDL-LEARNING",
-    "driverName": "",
+    "driverName": "Brother Laser Type1 Class Driver",
     "driverPath": "brother-dcp-l5662dn",
     "portas": [515, 631, 9100],
     "colorido": false,
     "duplex": true,
-    "observacao": "Setor inferido pelo hostname; confirmar local e driverName."
+    "observacao": "Setor confirmado; usa driver de classe Brother."
   }
 ]

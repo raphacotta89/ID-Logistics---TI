@@ -159,54 +159,55 @@ if ($existente) {
 Write-Step "Verificando driver '$($p.driverName)'..."
 
 $driverInstalado = Get-PrinterDriver -Name $p.driverName -ErrorAction SilentlyContinue
+$usarIpp = $false
 
 if (-not $driverInstalado) {
-    if (-not $p.driverPath) {
-        Write-Err "Driver nao instalado e driverPath nao preenchido no catalogo."
-        Stop-Script 3
+    $pasta = if ($p.driverPath) { Join-Path $DriverRoot $p.driverPath } else { $null }
+
+    if ($pasta -and (Test-Path $pasta)) {
+        Write-Step "Injetando driver no Windows (pnputil)..."
+        $infs = Get-ChildItem -Path $pasta -Filter *.inf -Recurse -ErrorAction SilentlyContinue
+
+        if (-not $infs) {
+            Write-Err "Nenhum arquivo .INF encontrado em $pasta"
+            Stop-Script 3
+        }
+
+        foreach ($inf in $infs) {
+            & pnputil.exe /add-driver "$($inf.FullName)" /install | Out-Null
+        }
+
+        Start-Sleep -Seconds 2
+        Add-PrinterDriver -Name $p.driverName -ErrorAction Stop
+        Write-Ok "Driver instalado."
+    } else {
+        $usarIpp = $true
+        Write-Warn2 "Driver especifico nao encontrado. Usando o driver padrao do Windows (IPP)."
     }
-    $pasta = Join-Path $DriverRoot $p.driverPath
-
-    if (-not (Test-Path $pasta)) {
-        Write-Err "Driver nao instalado e pacote nao encontrado em: $pasta"
-        Write-Host "  Coloque os arquivos do driver (com o .INF) nessa pasta." -ForegroundColor DarkGray
-        Stop-Script 3
-    }
-
-    Write-Step "Injetando driver no Windows (pnputil)..."
-    $infs = Get-ChildItem -Path $pasta -Filter *.inf -Recurse -ErrorAction SilentlyContinue
-
-    if (-not $infs) {
-        Write-Err "Nenhum arquivo .INF encontrado em $pasta"
-        Stop-Script 3
-    }
-
-    foreach ($inf in $infs) {
-        & pnputil.exe /add-driver "$($inf.FullName)" /install | Out-Null
-    }
-
-    Start-Sleep -Seconds 2
-    Add-PrinterDriver -Name $p.driverName -ErrorAction Stop
-    Write-Ok "Driver instalado."
 } else {
     Write-Ok "Driver ja presente no sistema."
 }
 
-# --- 4. Porta TCP/IP ---
-$nomePorta = "IP_$($p.ip)"
-Write-Step "Configurando porta $nomePorta..."
-
-if (-not (Get-PrinterPort -Name $nomePorta -ErrorAction SilentlyContinue)) {
-    Add-PrinterPort -Name $nomePorta -PrinterHostAddress $p.ip -PortNumber 9100 -ErrorAction Stop
-    Write-Ok "Porta criada."
+# --- 4 e 5. Porta e fila ---
+if ($usarIpp) {
+    Write-Step "Criando a fila '$($p.fila)' pelo IPP..."
+    Add-Printer -Name $p.fila -IppURL "http://$($p.ip):631/ipp/print" -ErrorAction Stop
+    Write-Ok "Fila criada com o driver padrao do Windows."
 } else {
-    Write-Ok "Porta ja existia."
-}
+    $nomePorta = "IP_$($p.ip)"
+    Write-Step "Configurando porta $nomePorta..."
 
-# --- 5. Fila ---
-Write-Step "Criando a fila '$($p.fila)'..."
-Add-Printer -Name $p.fila -DriverName $p.driverName -PortName $nomePorta -ErrorAction Stop
-Write-Ok "Fila criada."
+    if (-not (Get-PrinterPort -Name $nomePorta -ErrorAction SilentlyContinue)) {
+        Add-PrinterPort -Name $nomePorta -PrinterHostAddress $p.ip -PortNumber 9100 -ErrorAction Stop
+        Write-Ok "Porta criada."
+    } else {
+        Write-Ok "Porta ja existia."
+    }
+
+    Write-Step "Criando a fila '$($p.fila)'..."
+    Add-Printer -Name $p.fila -DriverName $p.driverName -PortName $nomePorta -ErrorAction Stop
+    Write-Ok "Fila criada."
+}
 
 # --- 6. Ajustes ---
 try {

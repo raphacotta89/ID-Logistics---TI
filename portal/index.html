@@ -77,10 +77,9 @@
 
 <main>
   <div class="aviso">
-    <strong>Como instalar:</strong> <b>Instalar</b> usa o protocolo <code>idlprint://</code> e executa direto
-    (precisa do <code>idlprint.reg</code> aplicado uma vez nesta maquina).
-    <b>Copiar comando</b> coloca a instalacao na area de transferencia para colar num PowerShell como administrador.
-    Cadastros sem fila ou driver ficam bloqueados ate serem completados.
+    <strong>Como instalar:</strong> no portal online, <b>Baixar instalador</b> gera um arquivo para executar no computador.
+    O Windows pedira permissao de administrador. <b>Copiar comando</b> permite fazer a mesma instalacao pelo PowerShell.
+    O computador precisa estar conectado a rede da ID Logistics.
   </div>
 
   <div class="toolbar">
@@ -130,10 +129,19 @@
   }
 
   const instalador = caminhoInstalador();
+  const onlineUrl = 'https://raw.githubusercontent.com/raphacotta89/ID-Logistics---TI/main/scripts/Install-OnlinePrinter.ps1';
+  const online = location.protocol === 'http:' || location.protocol === 'https:';
 
   function comando(p) {
-    if (!instalador) return '';
-    return 'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "' + instalador + '" -Id "' + p.id + '"';
+    if (instalador) {
+      return 'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "' + instalador + '" -Id "' + p.id + '"';
+    }
+    return 'powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "$f=Join-Path $env:TEMP \'IDL-Print-Online.ps1\'; Invoke-WebRequest -UseBasicParsing \'' + onlineUrl + '\' -OutFile $f; & $f -Id \'' + p.id + '\'"';
+  }
+
+  function acaoInstalar(p, cmd) {
+    if (!online) return 'location.href=\'idlprint://' + encodeURIComponent(p.id) + '\'';
+    return 'baixar(this)';
   }
 
   function cardHTML(p) {
@@ -154,19 +162,42 @@
       '<dt>Fila</dt><dd>' + esc(p.fila || '-') + '</dd></dl>' +
       '<div class="badges">' + b.join('') + '</div>' +
       '<div class="actions">' +
-        '<button class="primary" ' + (pronto ? 'onclick="location.href=\'idlprint://' + encodeURIComponent(p.id) + '\'"' : 'disabled title="Preencha fila e driverName"') + '>Instalar</button>' +
-        '<button ' + (pronto && cmd ? 'data-cmd="' + esc(cmd) + '" onclick="copiar(this)"' : 'disabled title="Abra o portal pela pasta interna e complete o cadastro"') + '>Copiar comando</button>' +
+        '<button class="primary" ' + (pronto ? 'data-cmd="' + esc(cmd) + '" data-id="' + esc(p.id) + '" onclick="' + acaoInstalar(p, cmd) + '"' : 'disabled title="Cadastro incompleto"') + '>' + (online ? 'Baixar instalador' : 'Instalar') + '</button>' +
+        '<button ' + (pronto ? 'data-cmd="' + esc(cmd) + '" onclick="copiar(this)"' : 'disabled title="Cadastro incompleto"') + '>Copiar comando</button>' +
         '<a class="button" href="http://' + esc(p.ip) + '/" target="_blank" rel="noopener">Abrir painel</a>' +
       '</div></div>';
   }
 
   window.copiar = function (btn) {
-    navigator.clipboard.writeText(btn.dataset.cmd).then(() => {
+    const copiarTexto = navigator.clipboard && navigator.clipboard.writeText
+      ? navigator.clipboard.writeText(btn.dataset.cmd)
+      : new Promise((resolve, reject) => {
+          const t = document.createElement('textarea');
+          t.value = btn.dataset.cmd;
+          document.body.appendChild(t);
+          t.select();
+          document.execCommand('copy') ? resolve() : reject();
+          t.remove();
+        });
+    copiarTexto.then(() => {
       const t = btn.textContent;
       btn.textContent = 'Copiado';
       btn.classList.add('ok');
       setTimeout(() => { btn.textContent = t; btn.classList.remove('ok'); }, 1600);
     });
+  };
+
+  window.baixar = function (btn) {
+    const conteudo = '@echo off\r\ntitle ID Logistics - Instalar impressora\r\n' + btn.dataset.cmd + '\r\npause\r\n';
+    const blob = new Blob([conteudo], { type: 'application/octet-stream' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Instalar-' + btn.dataset.id + '.cmd';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   function render() {
