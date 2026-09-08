@@ -5,6 +5,8 @@ O técnico abre uma página, acha a impressora pelo setor e instala com um cliqu
 
 Para abrir o portal nesta pasta, dê duplo clique em **Abrir-Portal.cmd**.
 
+Portal online: **https://raphacotta89.github.io/ID-Logistics---TI/**
+
 ---
 
 ## Estrutura

@@ -141,7 +141,7 @@
     b.push(p.colorido ? '<span class="badge cor">Colorida</span>' : '<span class="badge">Mono</span>');
     if (p.duplex) b.push('<span class="badge">Duplex</span>');
     if (p.fabricante) b.push('<span class="badge">' + esc(p.fabricante) + '</span>');
-    const pronto = Boolean(p.ip && p.fila && p.driverName);
+    const pronto = p.pronto === true || Boolean(p.ip && p.fila && p.driverName);
     if (!pronto) b.push('<span class="badge pending">Cadastro incompleto</span>');
     const cmd = comando(p);
 

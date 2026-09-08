@@ -23,7 +23,23 @@ if (-not (Test-Path $CatalogPath)) { throw "Catalogo nao encontrado: $CatalogPat
 
 $catalogoLido = Get-Content $CatalogPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $catalogo = @(foreach ($item in $catalogoLido) { $item })
-$json     = $catalogo | ConvertTo-Json -Depth 5 -Compress
+$catalogoPortal = @(
+    foreach ($p in $catalogo) {
+        [ordered]@{
+            id         = $p.id
+            setor      = $p.setor
+            local      = $p.local
+            modelo     = $p.modelo
+            fabricante = $p.fabricante
+            ip         = $p.ip
+            fila       = $p.fila
+            colorido   = [bool]$p.colorido
+            duplex     = [bool]$p.duplex
+            pronto     = [bool]($p.ip -and $p.fila -and $p.driverName)
+        }
+    }
+)
+$json = $catalogoPortal | ConvertTo-Json -Depth 5 -Compress
 
 # --- 1. printers.js ---
 "window.PRINTERS = $json;" | Set-Content -Path (Join-Path $PortalDir 'printers.js') -Encoding UTF8
