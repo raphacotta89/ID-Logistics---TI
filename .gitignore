@@ -11,3 +11,6 @@ scripts/Protocol-Handler.ps1
 
 # Logo local
 portal/logo.png
+
+git-push.ps1
+git-cleanup.ps1
