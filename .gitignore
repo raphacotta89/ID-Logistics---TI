@@ -13,3 +13,6 @@ portal/logo.png
 
 git-push.ps1
 git-cleanup.ps1
+
+# Saida pronta para hospedagem
+dist/
