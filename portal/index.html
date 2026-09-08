@@ -18,22 +18,38 @@
   }}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 "Segoe UI",system-ui,sans-serif}
-  header{background:var(--brand);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-  header img{height:34px;display:block}
+  .campaign-banner{width:100%;overflow:hidden;background:#fff;line-height:0;border-bottom:1px solid rgba(10,47,107,.12)}
+  .campaign-banner img{width:100%;height:clamp(120px,16.9vw,220px);object-fit:cover;object-position:center;display:block}
+  header{background:linear-gradient(110deg,#073b74 0%,#0a4f8d 62%,#0865ae 100%);color:#fff;padding:15px max(20px,calc((100vw - 1180px)/2 + 20px));display:flex;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:0 6px 20px rgba(6,44,85,.18)}
+  header img{width:62px;height:62px;object-fit:cover;display:block;border-radius:12px;box-shadow:0 3px 10px rgba(0,0,0,.2)}
   .brand-fallback{font-weight:700;font-size:17px;letter-spacing:.5px;border:2px solid rgba(255,255,255,.5);padding:4px 11px;border-radius:5px}
-  header h1{font-size:15.5px;font-weight:400;margin:0;opacity:.9}
+  .header-copy{display:flex;flex-direction:column;gap:1px}
+  header h1{font-size:20px;font-weight:700;margin:0;letter-spacing:.1px}
+  .header-copy span{font-size:13px;opacity:.78}
   header .spacer{flex:1}
-  header .count{font-size:13px;opacity:.8}
-  main{max-width:1180px;margin:0 auto;padding:22px 20px 60px}
+  header .count{font-size:13px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);padding:7px 11px;border-radius:999px}
+  main{max-width:1180px;margin:0 auto;padding:28px 20px 60px}
+  @media(max-width:620px){
+    .campaign-banner img{height:118px;object-position:72% center}
+    header{padding:13px 16px;gap:12px}
+    header img{width:50px;height:50px;border-radius:9px}
+    header h1{font-size:17px}
+    .header-copy span{font-size:12px}
+    header .count{width:100%;text-align:center}
+    main{padding:20px 14px 48px}
+  }
 </style>
 </head>
 <body>
 <style>
-  .aviso{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--brand-2);
-    border-radius:var(--radius);padding:12px 16px;margin-bottom:18px;font-size:13px;color:var(--text-dim)}
+  .page-heading{margin:0 0 18px}
+  .page-heading h2{font-size:21px;line-height:1.25;margin:0 0 4px;color:var(--text)}
+  .page-heading p{margin:0;color:var(--text-dim);font-size:14px}
+  .aviso{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--brand-2);
+    border-radius:var(--radius);padding:14px 16px;margin-bottom:18px;font-size:13px;color:var(--text-dim);box-shadow:var(--shadow)}
   .aviso strong{color:var(--text)}
   code{background:var(--surface-2);padding:1px 5px;border-radius:4px;font-family:"Cascadia Mono",Consolas,monospace;font-size:12px}
-  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
   input[type=search],select{padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);
     background:var(--surface);color:var(--text);font-size:14px}
   input[type=search]{flex:1;min-width:240px}
@@ -43,8 +59,9 @@
   .setor-title{font-size:11.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
     color:var(--text-dim);margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(325px,1fr));gap:14px}
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-    box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:12px}
+  .card{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--brand-2);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:17px;display:flex;flex-direction:column;gap:12px;transition:transform .15s ease,box-shadow .15s ease}
+  .card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(16,32,58,.11)}
   .card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
   .modelo{font-weight:600;font-size:15px;line-height:1.3}
   .local{color:var(--text-dim);font-size:13px;margin-top:2px}
@@ -68,14 +85,26 @@
   footer{text-align:center;color:var(--text-dim);font-size:12px;padding:24px}
 </style>
 
+<div class="campaign-banner">
+  <img src="banner-together.png" alt="Let's build our ID Logistics together">
+</div>
+
 <header>
   <img src="logo.png" alt="ID Logistics" onerror="this.outerHTML='&lt;span class=\'brand-fallback\'&gt;ID LOGISTICS&lt;/span&gt;'">
-  <h1>Central de Impressoras &middot; TI</h1>
+  <div class="header-copy">
+    <h1>Central de Impressoras</h1>
+    <span>Suporte de TI &middot; ID Logistics</span>
+  </div>
   <span class="spacer"></span>
   <span class="count" id="contador"></span>
 </header>
 
 <main>
+  <div class="page-heading">
+    <h2>Instalação rápida por setor</h2>
+    <p>Localize a impressora e instale a fila correta no computador.</p>
+  </div>
+
   <div class="aviso">
     <strong>Como instalar:</strong> no portal online, <b>Baixar instalador</b> gera um arquivo para executar no computador.
     O Windows pedira permissao de administrador. <b>Copiar comando</b> permite fazer a mesma instalacao pelo PowerShell.
