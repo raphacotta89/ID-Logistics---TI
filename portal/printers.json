@@ -1,0 +1,18 @@
+[
+  {
+    "id": "expedicao-01",
+    "setor": "Expedição",
+    "local": "Doca 3, ao lado da mesa de conferência",
+    "modelo": "Epson WF-M5899 Series",
+    "fabricante": "Epson",
+    "ip": "10.20.30.41",
+    "hostname": "",
+    "fila": "IDL-EXPEDICAO-01",
+    "driverName": "EPSON WF-M5899 Series",
+    "driverPath": "epson-wfm5899",
+    "portas": [9100, 515, 631],
+    "colorido": false,
+    "duplex": true,
+    "observacao": "REGISTRO DE EXEMPLO - substituir pelo resultado do Scan-Printers.ps1"
+  }
+]

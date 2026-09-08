@@ -1,0 +1,13 @@
+# Drivers sao grandes demais para o Git (limite de 100 MB por arquivo).
+# Use GitHub Releases ou o share de rede.
+drivers/*
+!drivers/README.md
+
+# Gerados pelo Build-Portal.ps1
+portal/printers.js
+portal/launchers/
+portal/idlprint.reg
+scripts/Protocol-Handler.ps1
+
+# Logo local
+portal/logo.png
