@@ -4,7 +4,6 @@ drivers/*
 !drivers/README.md
 
 # Gerados pelo Build-Portal.ps1
-portal/printers.js
 portal/launchers/
 portal/idlprint.reg
 scripts/Protocol-Handler.ps1

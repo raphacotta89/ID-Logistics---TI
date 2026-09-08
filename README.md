@@ -3,12 +3,15 @@
 Catálogo e instalador de impressoras de rede **sem servidor de impressão**.
 O técnico abre uma página, acha a impressora pelo setor e instala com um clique.
 
+Para abrir o portal nesta pasta, dê duplo clique em **Abrir-Portal.cmd**.
+
 ---
 
 ## Estrutura
 
 ```
 ID-Logistics---TI/
+├── Abrir-Portal.cmd       → abre o portal no navegador
 ├── portal/
 │   ├── index.html          → a página que o técnico abre
 │   ├── printers.json       → FONTE DA VERDADE (edite este arquivo)
