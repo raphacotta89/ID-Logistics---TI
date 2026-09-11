@@ -1,5 +1,22 @@
 [
   {
+    "id": "rh-cnf2",
+    "setor": "RH",
+    "local": "RH",
+    "modelo": "Brother DCP-L5662DN",
+    "fabricante": "Brother",
+    "ip": "10.215.60.31",
+    "hostname": "RH-CNF2",
+    "mac": "94-DD-F8-4B-DF-04",
+    "fila": "IDL-RH",
+    "driverName": "Brother Laser Type1 Class Driver",
+    "driverPath": "brother-dcp-l5662dn",
+    "portas": [515, 631, 9100],
+    "colorido": false,
+    "duplex": true,
+    "observacao": "Impressora do RH confirmada pela varredura de rede."
+  },
+  {
     "id": "office-cnf2",
     "setor": "ADM",
     "local": "Colorida",
