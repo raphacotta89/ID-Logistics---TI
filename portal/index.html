@@ -9,6 +9,7 @@
     --bg:#f4f6f9; --surface:#fff; --surface-2:#eef1f6; --border:#d9dee7;
     --text:#16202e; --text-dim:#64748b; --brand:#0a2f6b; --brand-2:#1565c0;
     --accent:#00a651; --danger:#c62828;
+    --ok:#12a04a; --al:#e8a317; --er:#d92d20; --nd:#94a3b8;
     --radius:10px; --shadow:0 1px 2px rgba(16,32,58,.06),0 4px 14px rgba(16,32,58,.06);
   }
   @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
@@ -58,6 +59,22 @@
     border-radius:var(--radius);padding:14px 16px;margin-bottom:18px;font-size:13px;color:var(--text-dim);box-shadow:var(--shadow)}
   .aviso strong{color:var(--text)}
   code{background:var(--surface-2);padding:1px 5px;border-radius:4px;font-family:"Cascadia Mono",Consolas,monospace;font-size:12px}
+  .resumo{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:18px}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);
+    border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:600;box-shadow:var(--shadow)}
+  .chip.neutro{font-weight:400;color:var(--text-dim)}
+  .pt{width:9px;height:9px;border-radius:50%;flex:0 0 9px}
+  .legenda{display:flex;flex-wrap:wrap;gap:10px 22px;background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);padding:12px 16px;margin-bottom:18px;box-shadow:var(--shadow);font-size:12.5px;color:var(--text-dim)}
+  .legenda>span{display:flex;align-items:flex-start;gap:8px;max-width:340px}
+  .legenda .pt{margin-top:5px}
+  .legenda b{color:var(--text);font-weight:700}
+  .motivo{font-size:12px;line-height:1.35;font-weight:600;margin-top:-3px;padding:8px 11px;
+    border-radius:8px;border-left:3px solid var(--border);background:var(--surface-2);color:var(--text-dim)}
+  .motivo.grave{color:#a01c1c;border-left-color:var(--er);background:rgba(217,45,32,.09)}
+  .motivo.at{color:#8a5a00;border-left-color:var(--al);background:rgba(232,163,23,.10)}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .motivo.at{color:#f5c65a}
+    :root:not([data-theme="light"]) .motivo.grave{color:#ff9d95} }
   .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
   input[type=search],select{padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);
     background:var(--surface);color:var(--text);font-size:14px}
@@ -68,19 +85,48 @@
   .setor-title{font-size:11.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
     color:var(--text-dim);margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(325px,1fr));gap:14px}
-  .card{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--brand-2);border-radius:var(--radius);
-    box-shadow:var(--shadow);padding:17px;display:flex;flex-direction:column;gap:12px;transition:transform .15s ease,box-shadow .15s ease}
+  .card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--faixa,var(--nd));
+    border-radius:var(--radius);box-shadow:var(--shadow);padding:17px;display:flex;flex-direction:column;gap:12px;
+    transition:transform .15s ease,box-shadow .15s ease}
   .card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(16,32,58,.11)}
   .card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-  .modelo{font-weight:600;font-size:15px;line-height:1.3}
+  .modelo{font-weight:700;font-size:16px;line-height:1.25}
   .local{color:var(--text-dim);font-size:13px;margin-top:2px}
-  .meta{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;margin:0}
-  .meta dt{color:var(--text-dim)}
-  .meta dd{margin:0;font-family:"Cascadia Mono",Consolas,monospace}
+  .meta{display:flex;flex-wrap:wrap;gap:3px 14px;font-size:12.5px;color:var(--text-dim);margin:0}
+  .meta span b{color:var(--text);font-weight:600;font-family:"Cascadia Mono",Consolas,monospace}
   .badges{display:flex;gap:6px;flex-wrap:wrap}
   .badge{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--surface-2);color:var(--text-dim);border:1px solid var(--border)}
   .badge.cor{color:var(--accent);border-color:var(--accent)}
   .badge.pending{color:#9a6700;border-color:#c69026;background:#fff8df}
+  .sel{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;padding:4px 10px;
+    border-radius:999px;white-space:nowrap;border:1px solid}
+  .sel.ok{color:#0f7a33;border-color:#9ad9b2;background:rgba(18,160,74,.12)}
+  .sel.ok .pt{background:var(--ok)}
+  .sel.al{color:#8a5a00;border-color:#e6c583;background:rgba(232,163,23,.14)}
+  .sel.al .pt{background:var(--al)}
+  .sel.er{color:#a01c1c;border-color:#eda9a9;background:rgba(217,45,32,.13)}
+  .sel.er .pt{background:var(--er)}
+  .sel.nd{color:var(--text-dim);border-color:var(--border);background:var(--surface-2)}
+  .sel.nd .pt{background:var(--nd)}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .sel.ok{color:#6ee7a0}
+    :root:not([data-theme="light"]) .sel.al{color:#f5c65a}
+    :root:not([data-theme="light"]) .sel.er{color:#ff9d95} }
+  @keyframes pulsa{0%,100%{opacity:1}50%{opacity:.35}}
+  .sel.er .pt,.sel.al .pt{animation:pulsa 2s ease-in-out infinite}
+  .sup{padding-top:11px;border-top:1px solid var(--border)}
+  .sup-tit{font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:7px}
+  .sup-lin{display:flex;align-items:center;gap:9px;margin:5px 0;font-size:11.5px}
+  .sup-nome{flex:0 0 43%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-dim)}
+  .sup-bar{flex:1;height:7px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+  .sup-bar>i{display:block;height:100%;border-radius:99px}
+  .sup-vazia{flex:1;height:7px;border-radius:99px;background:repeating-linear-gradient(90deg,var(--border) 0 6px,transparent 6px 11px)}
+  .sup-pct{flex:0 0 56px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+  .selo{display:inline-block;padding:1px 7px;border-radius:99px;font-size:10px;font-weight:700}
+  .selo.bom{background:rgba(18,160,74,.15);color:#0f7a33}
+  .selo.ruim{background:rgba(217,45,32,.15);color:#a01c1c}
+  .erros{font-size:11.5px;font-weight:600;color:var(--er)}
+  .idade{font-size:10.5px;color:var(--text-dim)}
+  .idade.velho{color:#b54708;font-weight:700}
   .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
   button,.button{font:inherit;font-size:13px;padding:8px 12px;border-radius:7px;border:1px solid var(--border);
     background:var(--surface-2);color:var(--text);cursor:pointer;transition:.12s}
@@ -120,6 +166,9 @@
     <p>Localize a impressora e instale a fila correta no computador.</p>
   </div>
 
+  <div class="resumo" id="resumo"></div>
+  <div class="legenda" id="legenda"></div>
+
   <div class="aviso">
     <strong>Como instalar:</strong> no portal online, <b>Baixar instalador</b> gera um arquivo para executar no computador.
     O Windows pedira permissao de administrador. <b>Copiar comando</b> permite fazer a mesma instalacao pelo PowerShell.
@@ -134,9 +183,10 @@
   <div id="lista"></div>
 </main>
 
-<footer>TI ID Logistics &middot; Ribeirao das Neves &middot; catalogo gerado por <code>Scan-Printers.ps1</code></footer>
+<footer>TI ID Logistics &middot; Ribeirao das Neves &middot; catalogo gerado por <code>Scan-Printers.ps1</code> &middot; status por <code>Coleta-Status.ps1</code></footer>
 
 <script src="printers.js"></script>
+<script src="status.js"></script>
 <script>
 (async function () {
   let dados = window.PRINTERS;
@@ -164,6 +214,85 @@
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c =>
     ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 
+  // ---------------- status: dados da ultima coleta ----------------
+  const ST = (window.IDL_STATUS && window.IDL_STATUS.impressoras) ? window.IDL_STATUS : null;
+  const porIp = {};
+  if (ST) ST.impressoras.forEach(p => { porIp[p.ip] = p; });
+
+  let idade = null;
+  if (ST) {
+    const g = new Date(String(ST.geradoIso || ST.gerado || '').replace(' ', 'T'));
+    if (!isNaN(g)) idade = Math.max(0, Math.round((Date.now() - g.getTime()) / 60000));
+  }
+
+  const ROTULO = { ok:'Online', alerta:'Atencao', erro:'Com problema', offline:'Offline' };
+  const CLS    = { ok:'ok', alerta:'al', erro:'er', offline:'er' };
+  const FAIXA  = { ok:'var(--ok)', alerta:'var(--al)', erro:'var(--er)', offline:'var(--er)' };
+
+  function corBarra(p){ return p <= 10 ? 'var(--er)' : (p <= 25 ? 'var(--al)' : 'var(--ok)'); }
+
+  function textoIdade(){
+    if (idade === null) return '';
+    return idade < 1 ? 'atualizado ha menos de 1 min' : 'atualizado ha ' + idade + ' min';
+  }
+
+  function selo(s){
+    const st = s ? (s.status || 'offline') : null;
+    if (!st) return '<span class="sel nd"><span class="pt"></span>Sem dados</span>';
+    return '<span class="sel ' + CLS[st] + '" title="' + esc(s.statusTexto || '') + '">' +
+           '<span class="pt"></span>' + ROTULO[st] + '</span>';
+  }
+
+  function linhaSup(x){
+    const ini = '<div class="sup-lin"><span class="sup-nome" title="' + esc(x.nome) + '">' + esc(x.nome) + '</span>';
+    if (x.pct === null || x.pct === undefined) {
+      const trocar = (x.bruto === 0);
+      return ini + '<span class="sup-vazia"></span><span class="sup-pct"><span class="selo ' +
+             (trocar ? 'ruim' : 'bom') + '">' + (trocar ? 'TROCAR' : 'OK') + '</span></span></div>';
+    }
+    return ini + '<span class="sup-bar"><i style="width:' + x.pct + '%;background:' + corBarra(x.pct) + '"></i></span>' +
+           '<span class="sup-pct">' + x.pct + '%</span></div>';
+  }
+
+  function blocoStatus(s){
+    if (!s) return '';
+    let h = '';
+    if (s.erros && s.erros.length) {
+      h += '<div class="erros">&#9888; ' + s.erros.map(esc).join(' &middot; ') + '</div>';
+    }
+    if (s.suprimentos && s.suprimentos.length) {
+      h += '<div class="sup"><div class="sup-tit">Suprimentos</div>' +
+           s.suprimentos.map(linhaSup).join('') + '</div>';
+    }
+    return h;
+  }
+
+  // Explica em uma frase por que a impressora nao esta verde.
+  function motivo(s){
+    if (!s) return { txt:'Sem coleta de status para este IP', cls:'' };
+    if (s.status === 'offline') return { txt:'Nao responde ao ping da estacao de coleta', cls:'grave' };
+
+    const partes = [];
+    if (s.erros && s.erros.length) partes.push(s.erros.join(', '));
+
+    const sup = s.suprimentos || [];
+    const zerados = sup.filter(x => x.pct !== null && x.pct !== undefined && x.pct <= 5);
+    const baixos  = sup.filter(x => x.pct !== null && x.pct !== undefined && x.pct > 5 && x.pct <= 15);
+    const trocar  = sup.filter(x => (x.pct === null || x.pct === undefined) && x.bruto === 0);
+
+    zerados.forEach(x => partes.push(x.nome + ' em ' + x.pct + '%'));
+    trocar .forEach(x => partes.push(x.nome + ' pedindo troca'));
+    baixos .forEach(x => partes.push(x.nome + ' em ' + x.pct + '%'));
+
+    if (s.statusTexto && /SNMP/i.test(s.statusTexto)) partes.push('SNMP sem resposta, nivel lido do painel web');
+
+    if (!partes.length) {
+      if (s.status === 'ok') return { txt:'', cls:'' };
+      return { txt: s.statusTexto || 'Verificar no painel da impressora', cls:'at' };
+    }
+    return { txt: partes.join(' · '), cls: (s.status === 'erro' ? 'grave' : 'at') };
+  }
+
   function caminhoInstalador() {
     if (location.protocol !== 'file:') return '';
     let caminho = decodeURIComponent(location.pathname).replace(/\//g, '\\');
@@ -189,6 +318,10 @@
   }
 
   function cardHTML(p) {
+    const s = porIp[p.ip] || null;
+    const st = s ? (s.status || 'offline') : null;
+    const faixa = st ? FAIXA[st] : 'var(--nd)';
+
     const b = [];
     b.push(p.colorido ? '<span class="badge cor">Colorida</span>' : '<span class="badge">Mono</span>');
     if (p.duplex) b.push('<span class="badge">Duplex</span>');
@@ -196,20 +329,31 @@
     const pronto = p.pronto === true || Boolean(p.ip && p.fila && p.driverName);
     if (!pronto) b.push('<span class="badge pending">Cadastro incompleto</span>');
     const cmd = comando(p);
+    const m = motivo(s);
 
-    return '<div class="card">' +
+    return '<div class="card" style="--faixa:' + faixa + '">' +
       '<div class="card-head"><div>' +
-        '<div class="modelo">' + esc(p.modelo || 'Modelo nao identificado') + '</div>' +
-        '<div class="local">' + esc(p.local || p.setor || '') + '</div>' +
-      '</div></div>' +
-      '<dl class="meta"><dt>IP</dt><dd>' + esc(p.ip) + '</dd>' +
-      '<dt>Fila</dt><dd>' + esc(p.fila || '-') + '</dd></dl>' +
+        '<div class="modelo">' + esc(p.setor || p.local || p.ip) + '</div>' +
+        '<div class="local">' + esc(p.local || '') + '</div>' +
+      '</div>' + selo(s) + '</div>' +
+      (m.txt ? '<div class="motivo ' + m.cls + '">' + esc(m.txt) + '</div>' : '') +
+      '<dl class="meta">' +
+        '<span>IP <b>' + esc(p.ip) + '</b></span>' +
+        '<span>Fila <b>' + esc(p.fila || '-') + '</b></span>' +
+        (p.modelo ? '<span>' + esc(p.modelo) + '</span>' : '') +
+        (s && s.statusTexto ? '<span>Estado <b>' + esc(s.statusTexto) + '</b></span>' : '') +
+        (s && s.paginas ? '<span>Contador <b>' + Number(s.paginas).toLocaleString('pt-BR') + '</b></span>' : '') +
+      '</dl>' +
       '<div class="badges">' + b.join('') + '</div>' +
+      blocoStatus(s) +
       '<div class="actions">' +
         '<button class="primary" ' + (pronto ? 'data-cmd="' + esc(cmd) + '" data-id="' + esc(p.id) + '" onclick="' + acaoInstalar(p, cmd) + '"' : 'disabled title="Cadastro incompleto"') + '>' + (online ? 'Baixar instalador' : 'Instalar') + '</button>' +
         '<button ' + (pronto ? 'data-cmd="' + esc(cmd) + '" onclick="copiar(this)"' : 'disabled title="Cadastro incompleto"') + '>Copiar comando</button>' +
         '<a class="button" href="http://' + esc(p.ip) + '/" target="_blank" rel="noopener">Abrir painel</a>' +
-      '</div></div>';
+      '</div>' +
+      (s ? '<div class="idade' + (idade !== null && idade > 30 ? ' velho' : '') + '">' + textoIdade() +
+           (idade !== null && idade > 30 ? ' · pode estar desatualizado' : '') + '</div>' : '') +
+      '</div>';
   }
 
   window.copiar = function (btn) {
@@ -244,6 +388,34 @@
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
+  // ---------------- resumo e legenda ----------------
+  function montaResumo() {
+    const alvo = document.getElementById('resumo');
+    const leg  = document.getElementById('legenda');
+    if (!ST) {
+      alvo.innerHTML = '<span class="chip neutro"><span class="pt" style="background:var(--nd)"></span>' +
+                       'Status nao coletado. Rode o Coleta-Status.ps1 para gerar o status.js.</span>';
+      leg.style.display = 'none';
+      return;
+    }
+    const ips = new Set(dados.map(p => p.ip));
+    const vis = ST.impressoras.filter(p => ips.has(p.ip));
+    const n = e => vis.filter(p => e.indexOf(p.status) >= 0).length;
+
+    alvo.innerHTML =
+        '<span class="chip"><span class="pt" style="background:var(--ok)"></span>' + n(['ok']) + ' online</span>' +
+        '<span class="chip"><span class="pt" style="background:var(--al)"></span>' + n(['alerta']) + ' em atencao</span>' +
+        '<span class="chip"><span class="pt" style="background:var(--er)"></span>' + n(['erro','offline']) + ' com problema</span>' +
+        '<span class="chip neutro">coleta de ' + esc(ST.gerado || '') + '</span>';
+
+    leg.innerHTML =
+        '<span><span class="pt" style="background:var(--ok)"></span><div><b>Online</b> &mdash; responde e esta pronta para imprimir. Nada a fazer.</div></span>' +
+        '<span><span class="pt" style="background:var(--al)"></span><div><b>Atencao</b> &mdash; imprime, mas algo precisa de acao: suprimento entre 6% e 15%, pouco papel, ou SNMP sem resposta. O motivo aparece embaixo do nome.</div></span>' +
+        '<span><span class="pt" style="background:var(--er)"></span><div><b>Com problema</b> &mdash; nao responde, ou erro que impede a impressao, ou suprimento em 5% ou menos. Precisa de acao agora.</div></span>' +
+        '<span><span class="pt" style="background:var(--nd)"></span><div><b>Sem dados</b> &mdash; o IP nao entrou na ultima coleta. Confira o catalogo.</div></span>' +
+        '<span><span class="pt" style="background:transparent;border:1px solid var(--border)"></span><div><b>Barra de suprimento</b> &mdash; verde acima de 25%, amarelo ate 25%, vermelho ate 10%. O selo <b>OK</b> ou <b>TROCAR</b> aparece quando o equipamento nao informa percentual, caso das Brother mono pelo SNMP.</div></span>';
+  }
+
   function render() {
     const q = busca.value.trim().toLowerCase();
     const s = filtro.value;
@@ -260,26 +432,27 @@
       return;
     }
 
-    const grupos = {};
-    filtrados.forEach(p => {
-      const k = p.setor || 'Sem setor definido';
-      if (!grupos[k]) grupos[k] = [];
-      grupos[k].push(p);
+    const peso = { erro:0, offline:0, alerta:1, ok:2 };
+    filtrados.sort((a, b) => {
+      const pa = porIp[a.ip] ? (peso[porIp[a.ip].status] ?? 3) : 3;
+      const pb = porIp[b.ip] ? (peso[porIp[b.ip].status] ?? 3) : 3;
+      return pa - pb;
     });
 
-    lista.innerHTML = Object.keys(grupos).sort().map(setor =>
-      '<section class="setor-group">' +
-      '<h2 class="setor-title">' + esc(setor) + ' &middot; ' + grupos[setor].length + '</h2>' +
-      '<div class="grid">' + grupos[setor].map(cardHTML).join('') + '</div>' +
-      '</section>').join('');
+    const precisam = filtrados.filter(p => { const s = porIp[p.ip]; return s && s.status !== 'ok'; }).length;
+    const titulo = precisam
+      ? '<h2 class="setor-title">' + precisam + ' de ' + filtrados.length + ' precisam de acao &middot; ordenadas por urgencia</h2>'
+      : '<h2 class="setor-title">' + filtrados.length + ' impressoras</h2>';
+
+    lista.innerHTML = '<section class="setor-group">' + titulo +
+      '<div class="grid">' + filtrados.map(cardHTML).join('') + '</div></section>';
   }
 
   busca.addEventListener('input', render);
   filtro.addEventListener('change', render);
+  montaResumo();
   render();
 })();
 </script>
-<script src="status.js"></script>
-<script src="status-widget.js"></script>
 </body>
 </html>

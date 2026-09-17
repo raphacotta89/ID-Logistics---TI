@@ -1,10 +1,10 @@
 /* gerado por Coleta-Status.ps1 - nao editar a mao */
 window.IDL_STATUS = {
-    "gerado":  "2026-09-17 02:43:18",
-    "geradoIso":  "2026-09-17T02:43:18.0086921-03:00",
+    "gerado":  "2026-09-17 03:08:41",
+    "geradoIso":  "2026-09-17T03:08:41.9103316-03:00",
     "site":  "CDAMACNF2 - Ribeirao das Neves / MG",
     "coletadoPor":  null,
-    "duracaoSeg":  18,
+    "duracaoSeg":  14,
     "total":  8,
     "ok":  1,
     "alerta":  4,
@@ -48,7 +48,7 @@ window.IDL_STATUS = {
                                                 }
                                             ],
                             "fonte":  "snmp+painel-web",
-                            "coletadoEm":  "2026-09-17T02:43:00"
+                            "coletadoEm":  "2026-09-17T03:08:27"
                         },
                         {
                             "ip":  "10.215.60.32",
@@ -138,7 +138,7 @@ window.IDL_STATUS = {
                                                 }
                                             ],
                             "fonte":  "snmp+painel-web",
-                            "coletadoEm":  "2026-09-17T02:43:01"
+                            "coletadoEm":  "2026-09-17T03:08:28"
                         },
                         {
                             "ip":  "10.215.60.35",
@@ -154,7 +154,7 @@ window.IDL_STATUS = {
                                       ],
                             "modelo":  "Brother DCP-L5662DN",
                             "serie":  "U67028J4N336809",
-                            "paginas":  19552,
+                            "paginas":  19556,
                             "suprimentos":  [
                                                 {
                                                     "nome":  "Black Toner Cartridge",
@@ -171,14 +171,14 @@ window.IDL_STATUS = {
                                                     "tipo":  "cilindro",
                                                     "cor":  "",
                                                     "pct":  59,
-                                                    "bruto":  43998,
+                                                    "bruto":  43992,
                                                     "max":  75000,
                                                     "obs":  "",
                                                     "fonte":  "snmp"
                                                 }
                                             ],
                             "fonte":  "snmp+painel-web",
-                            "coletadoEm":  "2026-09-17T02:43:01"
+                            "coletadoEm":  "2026-09-17T03:08:29"
                         },
                         {
                             "ip":  "10.215.60.36",
@@ -258,7 +258,7 @@ window.IDL_STATUS = {
                                                 }
                                             ],
                             "fonte":  "snmp",
-                            "coletadoEm":  "2026-09-17T02:43:02"
+                            "coletadoEm":  "2026-09-17T03:08:29"
                         },
                         {
                             "ip":  "10.215.60.41",
@@ -279,7 +279,7 @@ window.IDL_STATUS = {
 
                                             ],
                             "fonte":  "snmp",
-                            "coletadoEm":  "2026-09-17T02:43:06"
+                            "coletadoEm":  "2026-09-17T03:08:30"
                         },
                         {
                             "ip":  "10.215.60.42",
@@ -309,7 +309,7 @@ window.IDL_STATUS = {
                                                 }
                                             ],
                             "fonte":  "painel-web",
-                            "coletadoEm":  "2026-09-17T02:43:09"
+                            "coletadoEm":  "2026-09-17T03:08:33"
                         },
                         {
                             "ip":  "10.215.60.43",
@@ -339,7 +339,7 @@ window.IDL_STATUS = {
                                                 }
                                             ],
                             "fonte":  "painel-web",
-                            "coletadoEm":  "2026-09-17T02:43:13"
+                            "coletadoEm":  "2026-09-17T03:08:37"
                         },
                         {
                             "ip":  "10.215.60.64",
@@ -379,7 +379,7 @@ window.IDL_STATUS = {
                                                 }
                                             ],
                             "fonte":  "snmp+painel-web",
-                            "coletadoEm":  "2026-09-17T02:43:17"
+                            "coletadoEm":  "2026-09-17T03:08:41"
                         }
                     ]
 };
